@@ -6,7 +6,7 @@ export default async function Home({ params }: { params: { id: string } }) {
 
 
 
-    const post:Post = await prisma.post.findUnique({
+    const post: Post | null = await prisma.post.findUnique({
         where: {
             id: params.id
         }
@@ -21,18 +21,18 @@ export default async function Home({ params }: { params: { id: string } }) {
         return author?.name
     }
 
-    const author = await getAuthorName(post.authorId as string)
+    const author = await getAuthorName(post?.authorId as string)
 
     return (
         <div>
             <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-                {post.title}
+                {post?.title}
             </h1>
 
             <p className="text-sm text-muted-foreground">{author}</p>
 
             <p className="leading-7 [&:not(:first-child)]:mt-6">
-                {post.content}
+                {post?.content}
             </p>
         </div>
     )
